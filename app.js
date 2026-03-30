@@ -1,0 +1,33 @@
+
+// Carregar variáveis de ambiente ANTES de tudo
+require('dotenv').config();
+
+const express = require('express');
+const app = express();
+
+// Porta vem do .env, ou usa 3000 como padrão
+const PORT = process.env.PORT || 3000;
+
+app.use(express.json());
+
+const clientesRoutes = require('./src/routes/clientesRoutes');
+app.use('/clientes', clientesRoutes);
+
+app.get('/', (req, res) => {
+  res.json({ 
+    mensagem: 'API de clientes com PostgreSQL',
+    versao: '3.0',
+    ambiente: process.env.NODE_ENV || 'development',
+    banco: 'PostgreSQL'
+  });
+});
+
+
+app.listen(PORT, () => {
+  console.log('='.repeat(50));
+  console.log('🚀 Servidor rodando!');
+  console.log(`📍 URL: http://localhost:${PORT}`);
+  console.log(`💾 Banco: PostgreSQL (${process.env.DB_NAME})`);
+  console.log(`🌍 Ambiente: ${process.env.NODE_ENV || 'development'}`);
+  console.log('='.repeat(50));
+});
