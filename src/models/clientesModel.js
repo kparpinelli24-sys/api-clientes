@@ -21,20 +21,20 @@ async function buscarPorId(id) {
 };
 
 async function criar(dados) {
-  const { nome, cpf, telefone, email, datanasc, rua, numeroCasa, bairro} = dados;
+  const { nome, cpf, telefone, email} = dados;
   
   // RETURNING * é um recurso do PostgreSQL que retorna
   // o registro inserido automaticamente!
   const sql = `
-    INSERT INTO clientes (nome, cpf, telefone, email, datanasc, rua, numeroCasa, bairro)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+    INSERT INTO clientes (nome, cpf, telefone, email)
+    VALUES ($1, $2, $3, $4)
     RETURNING *
   `;
   
   // Executar a query com os valores
   const result = await pool.query(
     sql,
-    [nome, cpf, telefone, email, datanasc, rua, numeroCasa, bairro]
+    [nome, cpf, telefone, email]
   );
   
   // O clientes inserido com o ID gerado pelo banco
@@ -42,19 +42,19 @@ async function criar(dados) {
 }
 
 async function atualizar(id, dados) {
-  const { nome, cpf, telefone, email, datanasc, rua, numeroCasa, bairro } = dados;
+  const { nome, cpf, telefone, email} = dados;
   
   // UPDATE com RETURNING * também retorna o registro atualizado
   const sql = `
     UPDATE clientes
-    SET nome = $1, cpf = $2, telefone = $3, email = $4, datanasc = $5, rua = $6, numeroCasa = $7, bairro = $8
-    WHERE id = $9
+    SET nome = $1, cpf = $2, telefone = $3, email = $4
+    WHERE id = $5
     RETURNING *
   `;
   
   const result = await pool.query(
     sql,
-    [nome, cpf, telefone, email, datanasc, rua, numeroCasa, bairro, id]
+    [nome, cpf, telefone, email, id]
   );
   
   // Se não atualizou nenhuma linha, retorna null
