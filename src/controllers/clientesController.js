@@ -47,10 +47,10 @@ async function buscarPorId(req, res) {
 
 async function criar(req, res) {
   try {
-    const { nome, cpf, telefone, email, datanasc, rua, numeroCasa, bairro } = req.body;
+    const { nome, cpf, telefone, email } = req.body;
 
     // Validações
-    if (!nome || !cpf || !telefone || !email || !datanasc || !rua || !numeroCasa || !bairro) {
+    if (!nome || !cpf || !telefone || !email) {
       return res.status(400).json({
         mensagem: 'Todos os campos são obrigatórios'
       });
@@ -60,12 +60,7 @@ async function criar(req, res) {
       nome,
       cpf,
       telefone,
-      email,
-      datanasc,
-      rua,
-      numeroCasa,
-      bairro
-
+      email
     });
 
     res.status(201).json(novoclientes);
@@ -79,7 +74,7 @@ async function criar(req, res) {
 async function atualizar(req, res) {
   try {
     const id = parseInt(req.params.id);
-    const { nome, cpf, telefone, email, datanasc, rua, numeroCasa, bairro } = req.body;
+    const { nome, cpf, telefone, emai } = req.body;
 
     if (isNaN(id)) {
       return res.status(400).json({
@@ -87,7 +82,7 @@ async function atualizar(req, res) {
       });
     }
 
-    if (!nome || !cpf || !telefone || !email || !datanasc || !rua || !numeroCasa || !bairro) {
+    if (!nome || !cpf || !telefone || !email) {
       return res.status(400).json({
         mensagem: 'Todos os campos são obrigatórios'
       });
@@ -97,11 +92,7 @@ async function atualizar(req, res) {
       nome,
       cpf,
       telefone,
-      email,
-      datanasc,
-      rua,
-      numeroCasa,
-      bairro
+      email
 
     });
 
